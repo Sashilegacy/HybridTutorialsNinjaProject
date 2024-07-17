@@ -15,6 +15,8 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import com.tutorialsninja.qa.base.BaseClass;
+import com.tutorialsninja.qa.pages.HomePage;
+import com.tutorialsninja.qa.pages.LoginPage;
 import com.tutorialsninja.qa.utils.Utilities;
 
  public class Login extends BaseClass {
@@ -31,24 +33,21 @@ import com.tutorialsninja.qa.utils.Utilities;
 	 
 	 
 	
-	@Test(priority=1,dataProvider="supplyTestData")
+	@Test(priority=1,dataProvider="validCredentialsSupplier")
 	public void verifyLoginwithValidCredentials(String email, String password) {
-		
-		
-		driver.findElement(By.id("input-email")).sendKeys(email);
-		driver.findElement(By.id("input-password")).sendKeys(prop.getProperty(password));
-		driver.findElement(By.xpath("//input[@value='Login']")).click();
+		LoginPage loginPage=new LoginPage(driver);
+		loginPage.enterEmailAddress(email);
+		loginPage.enterPassword(password);
+		loginPage.clickOnLoginButton();
 		Assert.assertTrue(driver.findElement(By.linkText("Change your password")).isDisplayed());
 		
 		
 		
 	}
 	
-	@DataProvider
+	@DataProvider(name="validCredentialsSupplier")
 	public Object[][] supplyTestData() {
-		Object[][] data= {{"sashidhar123@gmail.com","12345"},
-				{"gvn.sashidhar@gmail.com","12345"},
-				{"sashidhar143@gmail.com","12345"}};
+		Object[][] data= Utilities.getTestDataFromExcel("Login");
 		return data;
 	}
 	
@@ -112,8 +111,9 @@ import com.tutorialsninja.qa.utils.Utilities;
 	public void setup() {
 		//loadPropertiesFile();
 		driver=initializeBrowserAndOpenApplicationURL(prop.getProperty("browserName"));
-			driver.findElement(By.xpath("//span[text()='My Account']")).click();
-			driver.findElement(By.linkText("Login")).click();
+		  HomePage homePage=new HomePage(driver);
+		  homePage.clickOnMyAccount();
+		  homePage.selectLoginOption();
 		
 	}
  }
