@@ -11,6 +11,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import com.tutorialsninja.qa.base.BaseClass;
@@ -27,19 +28,32 @@ import com.tutorialsninja.qa.utils.Utilities;
 	 public void tearDown() {
 		 driver.quit();
 	 }
+	 
+	 
 	
-	@Test(priority=1)
-	public void verifyLoginwithValidCredentials() {
+	@Test(priority=1,dataProvider="supplyTestData")
+	public void verifyLoginwithValidCredentials(String email, String password) {
 		
 		
-		driver.findElement(By.id("input-email")).sendKeys(prop.getProperty("validEmail"));
-		driver.findElement(By.id("input-password")).sendKeys(prop.getProperty("validPassword"));
+		driver.findElement(By.id("input-email")).sendKeys(email);
+		driver.findElement(By.id("input-password")).sendKeys(prop.getProperty(password));
 		driver.findElement(By.xpath("//input[@value='Login']")).click();
 		Assert.assertTrue(driver.findElement(By.linkText("Change your password")).isDisplayed());
 		
 		
 		
 	}
+	
+	@DataProvider
+	public Object[][] supplyTestData() {
+		Object[][] data= {{"sashidhar123@gmail.com","12345"},
+				{"gvn.sashidhar@gmail.com","12345"},
+				{"sashidhar143@gmail.com","12345"}};
+		return data;
+	}
+	
+	
+	
 	
 	@Test(priority=2)
 	public void verifywithInvalidCredentials() {

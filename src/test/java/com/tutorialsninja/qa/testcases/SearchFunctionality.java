@@ -18,7 +18,7 @@ public class SearchFunctionality extends BaseClass{
 	
 	@Test(priority=1)
 	public void verifySearchWithValidProduct() {
-		driver.findElement(By.name("search")).sendKeys("HP");
+		driver.findElement(By.name("search")).sendKeys(dataProp.getProperty("validProduct"));
 		driver.findElement(By.xpath("//div[@id='search']/descendant::button")).click();
 		Assert.assertTrue(driver.findElement(By.linkText("HP LP3065")).isDisplayed(),"Search Result is not Displayed!");
 		
@@ -42,20 +42,20 @@ public class SearchFunctionality extends BaseClass{
 	
 	@Test(priority=2)
 	public void verifywithInvalidProduct(){
-		driver.findElement(By.name("search")).sendKeys("Honda");
+		driver.findElement(By.name("search")).sendKeys(dataProp.getProperty("inValidProduct"));
 		driver.findElement(By.xpath("//div[@id='search']/descendant::button")).click();
 		String searchResultMessage=driver.findElement(By.xpath("//div[@id='content']/h2/following-sibling::p")).getText();
-		Assert.assertEquals(searchResultMessage, "There is no product that matches the search criteria.","No Product in Search Result is not Displayed!");
+		Assert.assertEquals(searchResultMessage, dataProp.getProperty("noProductTextInSearchResults"),"No Product in Search Result is not Displayed!");
 		
 		
 	}
 	
 	@Test(priority=3)
 	public void verifySearchWithoutAnyProduct() {
-		driver.findElement(By.name("search")).sendKeys("");
+		
 		driver.findElement(By.xpath("//div[@id='search']/descendant::button")).click();
 		String searchResultMessage=driver.findElement(By.xpath("//div[@id='content']/h2/following-sibling::p")).getText();
-		Assert.assertEquals(searchResultMessage, "There is no product that matches the search criteria.","No Product in Search Result is not Displayed!");
+		Assert.assertEquals(searchResultMessage, dataProp.getProperty("noProductTextInSearchResults"),"No Product in Search Result is not Displayed!");
 		
 	}
 
