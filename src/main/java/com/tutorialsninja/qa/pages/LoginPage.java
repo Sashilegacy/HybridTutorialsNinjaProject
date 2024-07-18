@@ -19,6 +19,10 @@ public class LoginPage {
 	private WebElement loginButton;
 	
 	
+	@FindBy(xpath="\"//div[contains(@class,'alert-danger')]\"")
+	private WebElement emailPasswordNotMatchingWarning;
+	
+	
 	public LoginPage(WebDriver driver) {
 		this.driver=driver;
 		PageFactory.initElements(driver, this);
@@ -36,6 +40,10 @@ public class LoginPage {
 	
 	public void clickOnLoginButton() {
 		loginButton.click();
+	}
+	public String retrieveEmailPasswordWarningMessageText() {
+		String warningText=emailPasswordNotMatchingWarning.getText();
+		return warningText;
 	}
 	
 	
