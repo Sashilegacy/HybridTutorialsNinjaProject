@@ -19,7 +19,7 @@ public class LoginPage {
 	private WebElement loginButton;
 	
 	
-	@FindBy(xpath="\"//div[contains(@class,'alert-danger')]\"")
+	@FindBy(xpath="//div[contains(@class,'alert-danger')]")
 	private WebElement emailPasswordNotMatchingWarning;
 	
 	
@@ -38,9 +38,21 @@ public class LoginPage {
 		passwordField.sendKeys(passwordText);
 	}
 	
-	public void clickOnLoginButton() {
+	public AccountPage clickOnLoginButton() {
 		loginButton.click();
+		return new AccountPage(driver);
 	}
+	
+	
+	public AccountPage login(String username,String password) {
+		emailAddressField.sendKeys(username);
+		passwordField.sendKeys(password);
+		loginButton.click();
+		return new AccountPage(driver);
+	}
+	
+	
+	
 	public String retrieveEmailPasswordWarningMessageText() {
 		String warningText=emailPasswordNotMatchingWarning.getText();
 		return warningText;

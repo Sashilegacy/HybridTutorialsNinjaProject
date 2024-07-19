@@ -1,23 +1,21 @@
 package com.tutorialsninja.qa.testcases;
 
-import java.time.Duration;
-import java.util.Date;
-
-import org.checkerframework.checker.units.qual.Time;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.edge.EdgeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import com.tutorialsninja.qa.base.BaseClass;
+import com.tutorialsninja.qa.pages.AccountSuccessPage;
+import com.tutorialsninja.qa.pages.HomePage;
+import com.tutorialsninja.qa.pages.RegisterPage;
 import com.tutorialsninja.qa.utils.Utilities;
 
 public class RegistrationPage extends BaseClass {
+	RegisterPage registerPage; 
+	AccountSuccessPage accountSuccessPage;
+	HomePage homePage;
 	WebDriver driver;
 	
 	public RegistrationPage() {
@@ -25,36 +23,46 @@ public class RegistrationPage extends BaseClass {
 	}
 	
 	@Test(priority=1)
-	public void verifyRegisterwithMandatoryFields() {
+	public void verifyRegisterwithMandatoryFields()  {
+			
+			/*registerPage.enterFirstName(dataProp.getProperty("firstName"));
+			registerPage.enterLastName(dataProp.getProperty("lastName"));
+			registerPage.enterEmailAddress(Utilities.generatewithemailstamp());
+			registerPage.entertelephoneNumber(dataProp.getProperty("telephoneNumber"));
+			registerPage.enterPassword(prop.getProperty("validPassword"));
+			registerPage.enterConfirmPassword(prop.getProperty("validPassword"));
+			registerPage.selectPrivacyPolicy();
+			AccountSuccessPage accountSuccessPage = registerPage.clickOnContinueButton();*/
+		   accountSuccessPage= registerPage.registerWithMandatoryFields(dataProp.getProperty("firstName"), dataProp.getProperty("lastName"), Utilities.generatewithemailstamp(), dataProp.getProperty("telephoneNumber"), prop.getProperty("validPassword"));
+			
+			
+			//String actualSuccessHeading=accountSuccessPage.retrieveAccountSuccessPageHeading();
+			Assert.assertEquals(accountSuccessPage.retrieveAccountSuccessPageHeading(),dataProp.getProperty("accountSuccessfullyCreatedHeading"),"Account Success Page is not displayed");
 		
-		driver.findElement(By.id("input-firstname")).sendKeys(dataProp.getProperty("firsametName"));
-		driver.findElement(By.id("input-lastname")).sendKeys(dataProp.getProperty("lastName"));
-		driver.findElement(By.id("input-email")).sendKeys(Utilities.generatewithemailstamp());
-		driver.findElement(By.id("input-telephone")).sendKeys(dataProp.getProperty("telephoneNumber"));
-		driver.findElement(By.id("input-password")).sendKeys(prop.getProperty("validPassword"));
-		driver.findElement(By.id("input-confirm")).sendKeys(prop.getProperty("validPassword"));
-		driver.findElement(By.name("agree")).click();
-		driver.findElement(By.xpath("//input[@value='Continue']")).click();
-		String atcualHeading=driver.findElement(By.xpath("//div[@id='content']/h1")).getText();
-		Assert.assertEquals(atcualHeading, dataProp.getProperty("accountSuccessfullyCreatedHeading"),"Account Success Page is not displayed");
 		
 		
 		
 	}
 	@Test(priority=2)
-	public void verifyRegisterwithAllFields() {
-		 
-		driver.findElement(By.id("input-firstname")).sendKeys(dataProp.getProperty("firstName"));
-		driver.findElement(By.id("input-lastname")).sendKeys(dataProp.getProperty("lastName"));
-		driver.findElement(By.id("input-email")).sendKeys(Utilities.generatewithemailstamp());
-		driver.findElement(By.id("input-telephone")).sendKeys(dataProp.getProperty("telephoneNumber"));
-		driver.findElement(By.id("input-password")).sendKeys(prop.getProperty("validPassword"));
-		driver.findElement(By.id("input-confirm")).sendKeys(prop.getProperty("validPassword"));
-		driver.findElement(By.xpath("//input[@name='newsletter'][@value='1']")).click();
-		driver.findElement(By.name("agree")).click();
-		driver.findElement(By.xpath("//input[@value='Continue']")).click();
-		String atcualHeading=driver.findElement(By.xpath("//div[@id='content']/h1")).getText();
-		Assert.assertEquals(atcualHeading, dataProp.getProperty("accountSuccessfullyCreatedHeading"),"Account Success Page is not displayed");
+	public void verifyRegisterwithAllFields()   {
+		
+		
+		
+		/*registerPage.enterFirstName(dataProp.getProperty("firstName"));
+		registerPage.enterLastName(dataProp.getProperty("lastName"));
+		registerPage.enterEmailAddress(Utilities.generatewithemailstamp());
+		registerPage.entertelephoneNumber(dataProp.getProperty("telephoneNumber"));
+		registerPage.enterPassword(prop.getProperty("validPassword"));
+		registerPage.enterConfirmPassword(prop.getProperty("validPassword"));
+		registerPage.selectYesNewsLetterOption();
+		registerPage.selectPrivacyPolicy();
+		
+		accountSuccessPage=registerPage.clickOnContinueButton();*/
+		
+		accountSuccessPage=registerPage.registerWithAllFields(dataProp.getProperty("firstName"), dataProp.getProperty("lastName"), Utilities.generatewithemailstamp(), dataProp.getProperty("telephoneNumber"), prop.getProperty("validPassword"));
+		
+		//String actualSuccessHeading=accountSuccessPage.retrieveAccountSuccessPageHeading();
+		Assert.assertEquals(accountSuccessPage.retrieveAccountSuccessPageHeading(),dataProp.getProperty("accountSuccessfullyCreatedHeading"),"Account Success Page is not displayed");
 		
 		
 		
@@ -63,49 +71,57 @@ public class RegistrationPage extends BaseClass {
 	@Test(priority=3)
 	public void verifyRegiserwithExistingEmailAddress() {
 		
-		driver.findElement(By.id("input-firstname")).sendKeys(dataProp.getProperty("firstName"));
-		driver.findElement(By.id("input-lastname")).sendKeys(dataProp.getProperty("lastName"));
-		driver.findElement(By.id("input-email")).sendKeys(prop.getProperty("validEmail"));
-		driver.findElement(By.id("input-telephone")).sendKeys(dataProp.getProperty("telephoneNumber"));
-		driver.findElement(By.id("input-password")).sendKeys(prop.getProperty("validPassword"));
-		driver.findElement(By.id("input-confirm")).sendKeys(prop.getProperty("validPassword"));
-		driver.findElement(By.xpath("//input[@name='newsletter'][@value='1']")).click();
-		driver.findElement(By.name("agree")).click();
-		driver.findElement(By.xpath("//input[@value='Continue']")).click();
-		String actualWarning=driver.findElement(By.xpath("//div[contains(@class,'alert-dismissible')]")).getText();
-		Assert.assertTrue(actualWarning.contains(dataProp.getProperty("duplicateEmailWarning")));
+		/*registerPage.enterFirstName(dataProp.getProperty("firstName"));
+		registerPage.enterLastName(dataProp.getProperty("lastName"));
+		registerPage.enterEmailAddress(prop.getProperty("validEmail"));
+		registerPage.entertelephoneNumber(dataProp.getProperty("telephoneNumber"));
+		registerPage.enterPassword(prop.getProperty("validPassword"));
+		registerPage.enterConfirmPassword(prop.getProperty("validPassword"));
+		registerPage.selectYesNewsLetterOption();
+		registerPage.selectPrivacyPolicy();
+		registerPage.clickOnContinueButton();*/
+		accountSuccessPage=registerPage.registerWithAllFields(dataProp.getProperty("firstName"), dataProp.getProperty("lastName"), prop.getProperty("validEmail"), dataProp.getProperty("telephoneNumber"), prop.getProperty("validPassword"));
+		//String actualWarning=registerPage.retrieveduplicateEmailAddressWarning();
+		Assert.assertTrue(registerPage.retrieveduplicateEmailAddressWarning().contains(dataProp.getProperty("duplicateEmailWarning")));
 		
 		
 		
 	}
 	
 	@Test(priority=4)
-	public void verifyRegisteringwithoutProvidingAnyDetails() {
-		
-		driver.findElement(By.xpath("//input[@value='Continue']")).click();
-		String actualPrivacyPolicyWarning=driver.findElement(By.xpath("//div[contains(@class,'alert-dismissible')]")).getText();
-		Assert.assertTrue(actualPrivacyPolicyWarning.contains(dataProp.getProperty("privacyPolicyWarning")), "Privacy Policy Warning Message is not displayed");
-		String actualFirstNameWarning=driver.findElement(By.xpath("//input[@id='input-firstname']//following-sibling::div")).getText();
-		Assert.assertEquals(actualFirstNameWarning,dataProp.getProperty("firstNameWarning"),"First Name Warning Message is not displayed");
-		
-		String actualLastNameWarning=driver.findElement(By.xpath("//input[@id='input-lastname']//following-sibling::div")).getText();
-		Assert.assertEquals(actualLastNameWarning,dataProp.getProperty("lastNameWarning"),"Last Name Warning Message is not displayed");
-		
-		String actualEmailWarning=driver.findElement(By.xpath("//input[@id='input-email']//following-sibling::div")).getText();
-		Assert.assertEquals(actualEmailWarning,dataProp.getProperty("emailWarning"), "E-Mail Warning Message is not displayed");
-		
-		String actualTelephoneWarning=driver.findElement(By.xpath("//input[@id='input-telephone']//following-sibling::div")).getText();
-		Assert.assertEquals(actualTelephoneWarning,dataProp.getProperty("telephoneWarning"),"Telephone Warning Message is not displayed");
-		
-		String actualPasswordWarning=driver.findElement(By.xpath("//input[@id='input-password']//following-sibling::div")).getText();
-		Assert.assertEquals(actualPasswordWarning,dataProp.getProperty("passwordWarning"),"Password Warning Message is not displayed");
+	public void verifyRegisteringwithoutProvidingAnyDetails() throws Exception   {
 		
 		
+		registerPage.clickOnContinueButton();
+		
+		/*String actualPrivacyPolicyWarning=registerPage.retreivePrivacyPolicyWarning();
+		Assert.assertTrue(registerPage.retreivePrivacyPolicyWarning().contains(dataProp.getProperty("privacyPolicyWarning")), "Privacy Policy Warning Message is not displayed");
 		
 		
+		String actualFirstNameWarning=registerPage.retreiveFirstNameWarning();
+		Assert.assertEquals(registerPage.retreiveFirstNameWarning(),dataProp.getProperty("firstNameWarning"),"First Name Warning Message is not displayed");
 		
-	}
+		
+		String actualLastNameWarning=registerPage.retreiveLastNameWarning();
+		Assert.assertEquals(registerPage.retreiveLastNameWarning(),dataProp.getProperty("lastNameWarning"),"Last Name Warning Message is not displayed");
+		
+		
+		String actualEmailWarning=registerPage.retreiveEmailWarning();
+		Assert.assertEquals(registerPage.retreiveEmailWarning(),dataProp.getProperty("emailWarning"), "E-Mail Warning Message is not displayed");
+		
+		
+		String actualTelephoneWarning=registerPage.retreiveTelephoneNumberWarning();
+		Assert.assertEquals(registerPage.retreiveTelephoneNumberWarning(),dataProp.getProperty("telephoneWarning"),"Telephone Warning Message is not displayed");
+		
+		
+		String actualPasswordWarning=registerPage.retrievePasswordWarning();
+		Assert.assertEquals(registerPage.retrievePasswordWarning(),dataProp.getProperty("passwordWarning"),"Password Warning Message is not displayed");*/
+		Thread.sleep(3000);
+		Assert.assertTrue(registerPage.displayStatusOfWarningMessages(dataProp.getProperty("privacyPolicyWarning"),dataProp.getProperty("firstNameWarning"),dataProp.getProperty("lastNameWarning"),dataProp.getProperty("emailWarning"),dataProp.getProperty("telephoneWarning"), dataProp.getProperty("passwordWarning")), "Warning Message(s) are not displayed");
+		
+}
 	
+
 	@AfterMethod
 	public void tearDown() {
 		driver.quit();
@@ -116,9 +132,13 @@ public class RegistrationPage extends BaseClass {
 	public void setup() {
 		
 				driver=initializeBrowserAndOpenApplicationURL(prop.getProperty("browserName"));
-				driver.findElement(By.xpath("//span[text()='My Account']")).click();
-				driver.findElement(By.linkText("Register")).click();
-			
-	}
+				homePage=new HomePage(driver);
+				/*homePage.clickOnMyAccount();
+				registerPage = homePage.selectRegisterOption();*/
+				
+				registerPage=homePage.navigateToRegisterPage();
+				
+				
+				}
 
 }

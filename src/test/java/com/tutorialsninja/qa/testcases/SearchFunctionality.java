@@ -8,9 +8,13 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import com.tutorialsninja.qa.base.BaseClass;
+import com.tutorialsninja.qa.pages.HomePage;
+import com.tutorialsninja.qa.pages.SearchPage;
 
 public class SearchFunctionality extends BaseClass{
 	WebDriver driver;
+	SearchPage searchPage;
+	HomePage homePage;
 	
 	public SearchFunctionality() {
 		super();
@@ -18,9 +22,15 @@ public class SearchFunctionality extends BaseClass{
 	
 	@Test(priority=1)
 	public void verifySearchWithValidProduct() {
-		driver.findElement(By.name("search")).sendKeys(dataProp.getProperty("validProduct"));
-		driver.findElement(By.xpath("//div[@id='search']/descendant::button")).click();
-		Assert.assertTrue(driver.findElement(By.linkText("HP LP3065")).isDisplayed(),"Search Result is not Displayed!");
+		//HomePage homePage=new HomePage(driver);
+		searchPage=homePage.searchAProduct(dataProp.getProperty("validProduct"));
+		
+		//homePage.enterProductNameToSearchBox(dataProp.getProperty("validProduct"));
+		//SearchPage searchPage = homePage.clickOnSearchButton();
+		
+		//driver.findElement(By.name("search")).sendKeys(dataProp.getProperty("validProduct"));
+		//driver.findElement(By.xpath("//div[@id='search']/descendant::button")).click();
+		Assert.assertTrue(searchPage.displayStatusOfHpvalidProduct(),"Search Result is not Displayed!");
 		
 		
 		
@@ -31,6 +41,7 @@ public class SearchFunctionality extends BaseClass{
 	@BeforeMethod
 	public void setup() {
 		driver=initializeBrowserAndOpenApplicationURL(prop.getProperty("browserName"));
+		 homePage=new HomePage(driver);
 		
 	}
 	
@@ -42,10 +53,15 @@ public class SearchFunctionality extends BaseClass{
 	
 	@Test(priority=2)
 	public void verifywithInvalidProduct(){
-		driver.findElement(By.name("search")).sendKeys(dataProp.getProperty("inValidProduct"));
-		driver.findElement(By.xpath("//div[@id='search']/descendant::button")).click();
-		String searchResultMessage=driver.findElement(By.xpath("//div[@id='content']/h2/following-sibling::p")).getText();
-		Assert.assertEquals(searchResultMessage, dataProp.getProperty("noProductTextInSearchResults"),"No Product in Search Result is not Displayed!");
+		//HomePage homePage=new HomePage(driver);
+		searchPage=homePage.searchAProduct(dataProp.getProperty("inValidProduct"));
+	//	homePage.enterProductNameToSearchBox(dataProp.getProperty("inValidProduct"));
+		//searchPage=homePage.clickOnSearchButton();
+		
+		//driver.findElement(By.name("search")).sendKeys(dataProp.getProperty("inValidProduct"));
+		//driver.findElement(By.xpath("//div[@id='search']/descendant::button")).click();
+		//String searchResultMessage=searchPage.retrieveNoProductMessageText();
+		Assert.assertEquals(searchPage.retrieveNoProductMessageText(), dataProp.getProperty("noProductTextInSearchResults"),"No Product in Search Result is not Displayed!");
 		
 		
 	}
@@ -53,9 +69,11 @@ public class SearchFunctionality extends BaseClass{
 	@Test(priority=3)
 	public void verifySearchWithoutAnyProduct() {
 		
-		driver.findElement(By.xpath("//div[@id='search']/descendant::button")).click();
-		String searchResultMessage=driver.findElement(By.xpath("//div[@id='content']/h2/following-sibling::p")).getText();
-		Assert.assertEquals(searchResultMessage, dataProp.getProperty("noProductTextInSearchResults"),"No Product in Search Result is not Displayed!");
+		searchPage=homePage.clickOnSearchButton(); 
+		//driver.findElement(By.xpath("//div[@id='search']/descendant::button")).click();
+		
+		//String searchResultMessage=searchPage.retrieveNoProductMessageText();
+		Assert.assertEquals(searchPage.retrieveNoProductMessageText(), dataProp.getProperty("noProductTextInSearchResults"),"No Product in Search Result is not Displayed!");
 		
 	}
 
