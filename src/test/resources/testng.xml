@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 <suite name="TutorialsNinja Automation Test Suite">
+<listeners>
+<listener class-name="com.tutorialsninja.qa.listeners.MyListeners" />
+</listeners>
   <test  name="TutorialsNinja Automation Tests">
     <classes>
-      <class name="com.tutorialsninja.qa.testcases.RegistrationPage"/>
-      <class name="com.tutorialsninja.qa.testcases.Login"/>
-      <class name="com.tutorialsninja.qa.testcases.SearchFunctionality"/>
+      <class name="com.tutorialsninja.qa.testcases.RegistrationPageTest"/>
+      <class name="com.tutorialsninja.qa.testcases.LoginTest"/>
+      <class name="com.tutorialsninja.qa.testcases.SearchFunctionalityTest"/>
       
     </classes>
   </test> <!-- Test -->

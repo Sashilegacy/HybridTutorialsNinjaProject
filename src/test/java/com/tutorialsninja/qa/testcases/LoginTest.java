@@ -13,10 +13,10 @@ import com.tutorialsninja.qa.pages.HomePage;
 import com.tutorialsninja.qa.pages.LoginPage;
 import com.tutorialsninja.qa.utils.Utilities;
 
- public class Login extends BaseClass {
+ public class LoginTest extends BaseClass {
 	 LoginPage loginPage;
-	 WebDriver driver;
-	 public Login() {
+	public WebDriver driver;
+	 public LoginTest() {
 		 super();
 		 
 	 }

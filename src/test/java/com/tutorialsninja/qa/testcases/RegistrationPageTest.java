@@ -12,13 +12,13 @@ import com.tutorialsninja.qa.pages.HomePage;
 import com.tutorialsninja.qa.pages.RegisterPage;
 import com.tutorialsninja.qa.utils.Utilities;
 
-public class RegistrationPage extends BaseClass {
+public class RegistrationPageTest extends BaseClass {
 	RegisterPage registerPage; 
 	AccountSuccessPage accountSuccessPage;
 	HomePage homePage;
-	WebDriver driver;
+	public WebDriver driver;
 	
-	public RegistrationPage() {
+	public RegistrationPageTest() {
 		super();
 	}
 	

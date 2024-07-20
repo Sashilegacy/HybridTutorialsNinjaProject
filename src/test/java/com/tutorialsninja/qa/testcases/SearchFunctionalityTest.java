@@ -11,12 +11,12 @@ import com.tutorialsninja.qa.base.BaseClass;
 import com.tutorialsninja.qa.pages.HomePage;
 import com.tutorialsninja.qa.pages.SearchPage;
 
-public class SearchFunctionality extends BaseClass{
-	WebDriver driver;
+public class SearchFunctionalityTest extends BaseClass{
+	public WebDriver driver;
 	SearchPage searchPage;
 	HomePage homePage;
 	
-	public SearchFunctionality() {
+	public SearchFunctionalityTest() {
 		super();
 	}
 	
@@ -61,12 +61,12 @@ public class SearchFunctionality extends BaseClass{
 		//driver.findElement(By.name("search")).sendKeys(dataProp.getProperty("inValidProduct"));
 		//driver.findElement(By.xpath("//div[@id='search']/descendant::button")).click();
 		//String searchResultMessage=searchPage.retrieveNoProductMessageText();
-		Assert.assertEquals(searchPage.retrieveNoProductMessageText(), dataProp.getProperty("noProductTextInSearchResults"),"No Product in Search Result is not Displayed!");
-		
+		//Assert.assertEquals(searchPage.retrieveNoProductMessageText(), dataProp.getProperty("noProductTextInSearchResults"),"No Product in Search Result is not Displayed!");
+		Assert.assertEquals(searchPage.retrieveNoProductMessageText(), "abcd","No Product in Search Result is not Displayed!");
 		
 	}
 	
-	@Test(priority=3)
+	@Test(priority=3,dependsOnMethods= {"verifySearchWithValidProduct","verifywithInvalidProduct"})
 	public void verifySearchWithoutAnyProduct() {
 		
 		searchPage=homePage.clickOnSearchButton(); 
