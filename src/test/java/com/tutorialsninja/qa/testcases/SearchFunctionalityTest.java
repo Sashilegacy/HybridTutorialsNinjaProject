@@ -1,6 +1,7 @@
 package com.tutorialsninja.qa.testcases;
 
 import org.openqa.selenium.By;
+
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
@@ -10,6 +11,9 @@ import org.testng.annotations.Test;
 import com.tutorialsninja.qa.base.BaseClass;
 import com.tutorialsninja.qa.pages.HomePage;
 import com.tutorialsninja.qa.pages.SearchPage;
+
+
+//Updated Comment
 
 public class SearchFunctionalityTest extends BaseClass{
 	public WebDriver driver;
